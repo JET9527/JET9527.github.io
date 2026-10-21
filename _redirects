@@ -1,0 +1,10 @@
+# Cloudflare Pages 的 SPA 兜底规则。
+#
+# 背景：前端用 createWebHistory()，模块挂在根路径（/home、/weekly、/insights…）。
+# 直接访问或刷新这些地址时，CDN 上并不存在同名文件，必须返回 index.html
+# 交给 Vue Router 处理，否则会看到 404。
+#
+# 静态资源（/assets/*、/sw.js、/manifest.json、/icon-*.png）命中真实文件时
+# Cloudflare 会优先直接返回，不会走到这条规则，所以不需要额外排除。
+/*
+  /index.html  200
